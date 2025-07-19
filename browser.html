@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Fast Private Browser</title>
+  <title>Browser - By skulldagrait</title>
   <style>
     body { margin:0; background:#111; color:white; font-family:sans-serif; }
     #nav { background:#222; padding:10px; display:flex; }
@@ -20,11 +20,15 @@
     const url = document.getElementById('url')
     const go = document.getElementById('go')
     const frame = document.getElementById('frame')
-    go.onclick = () => {
+    function load() {
       let u = url.value
       if (!u.startsWith('http')) u = 'https://' + u
       frame.src = u
     }
+    go.onclick = load
+    url.addEventListener('keypress', e => {
+      if (e.key === 'Enter') load()
+    })
   </script>
 </body>
 </html>
