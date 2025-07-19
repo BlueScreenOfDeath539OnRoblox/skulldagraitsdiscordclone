@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Eaglercraft</title>
+  <title>Pixel Client</title>
   <style>
     body {
       margin: 0;
@@ -31,7 +31,7 @@
 
     .button {
       padding: 15px 30px;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: bold;
       color: black;
       background-color: white;
@@ -39,7 +39,7 @@
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s ease-in-out;
-      width: 250px;
+      width: 350px;
       text-align: center;
     }
 
@@ -54,45 +54,21 @@
       height: 500px;
       border: none;
       border-radius: 10px;
-    }
-
-    .view {
       display: none;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-
-    .view.active {
-      display: flex;
     }
   </style>
 </head>
 <body>
-  <div id="homeView" class="view active">
-    <h1>Eaglercraft</h1>
-    <div class="buttons">
-      <button class="button" onclick="goToPixelClient()">Pixel Client</button>
-    </div>
+  <h1>Pixel Client</h1>
+  <div class="buttons">
+    <button class="button" onclick="loadIframe()">https://devjakob.webs.vc/launcher/</button>
   </div>
-
-  <div id="pixelClientView" class="view">
-    <h1>Pixel Client</h1>
-    <div class="buttons">
-      <button class="button" onclick="loadIframe()">devjakobs.webs.vc</button>
-    </div>
-    <iframe id="pixelIframe" src="" style="display: none;"></iframe>
-  </div>
+  <iframe id="pixelIframe" src=""></iframe>
 
   <script>
-    function goToPixelClient() {
-      document.getElementById('homeView').classList.remove('active');
-      document.getElementById('pixelClientView').classList.add('active');
-    }
-
     function loadIframe() {
       const iframe = document.getElementById('pixelIframe');
-      iframe.src = 'https://devjakobs.webs.vc';
+      iframe.src = 'https://devjakob.webs.vc/launcher/';
       iframe.style.display = 'block';
     }
   </script>
