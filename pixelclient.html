@@ -1,59 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Pixel Client</title>
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      height: 100%;
       background-color: #000;
       color: white;
       font-family: 'Arial Black', sans-serif;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
+      overflow: hidden;
     }
 
     h1 {
-      font-size: 64px;
-      margin: 40px 0 20px;
+      font-size: 48px;
+      margin: 20px;
       text-align: center;
+      flex-shrink: 0;
     }
 
     .buttons {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      margin-top: 40px;
+      justify-content: center;
+      margin-bottom: 10px;
+      flex-shrink: 0;
     }
 
     .button {
-      padding: 15px 30px;
-      font-size: 20px;
+      padding: 12px 24px;
+      font-size: 18px;
       font-weight: bold;
       color: black;
       background-color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.2s ease-in-out;
-      width: 350px;
+      transition: background-color 0.2s ease-in-out;
+      width: 300px;
       text-align: center;
     }
 
     .button:hover {
       background-color: #ccc;
-      transform: scale(1.05);
     }
 
     iframe {
-      margin-top: 30px;
-      width: 90%;
-      height: 500px;
+      flex-grow: 1;
+      width: 100%;
       border: none;
-      border-radius: 10px;
+      border-radius: 0;
       display: none;
     }
   </style>
@@ -61,7 +60,7 @@
 <body>
   <h1>Pixel Client</h1>
   <div class="buttons">
-    <button class="button" onclick="loadIframe()">https://devjakob.webs.vc/launcher/</button>
+    <button class="button" onclick="loadIframe()">devjakob.webs.vc/launcher/</button>
   </div>
   <iframe id="pixelIframe" src=""></iframe>
 
