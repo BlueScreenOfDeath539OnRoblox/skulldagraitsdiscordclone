@@ -1,73 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <title>Pixel Client</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      background-color: #000;
-      color: white;
       font-family: 'Arial Black', sans-serif;
-      display: flex;
-      flex-direction: column;
       overflow: hidden;
     }
-
+    body {
+      display: flex;
+      flex-direction: column;
+      background: url('background.jpg') center/cover no-repeat fixed;
+      color: #fff;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+    }
     h1 {
       font-size: 48px;
-      margin: 20px;
+      margin: 20px 0 10px;
       text-align: center;
       flex-shrink: 0;
     }
-
     .buttons {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
       margin-bottom: 10px;
       flex-shrink: 0;
     }
-
     .button {
-      padding: 12px 24px;
+      padding: 14px 28px;
       font-size: 18px;
       font-weight: bold;
-      color: black;
-      background-color: white;
-      border: none;
-      border-radius: 6px;
+      color: #333;
+      background: #fff;
+      border: 2px solid rgba(255,255,255,0.8);
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.2s ease-in-out;
-      width: 300px;
+      transition: all 0.2s ease;
+      width: 320px;
       text-align: center;
     }
-
     .button:hover {
-      background-color: #ccc;
+      background: #f0f0f0;
+      transform: translateY(-2px);
+      border-color: #fff;
     }
-
     iframe {
       flex-grow: 1;
       width: 100%;
       border: none;
-      border-radius: 0;
       display: none;
+      background: #000;
     }
   </style>
 </head>
 <body>
   <h1>Pixel Client</h1>
   <div class="buttons">
-    <button class="button" onclick="loadIframe()">devjakob.webs.vc/launcher/</button>
+    <button class="button" onclick="loadIframe('https://devjakob.webs.vc/launcher/')">
+      devjakob.webs.vc/launcher/
+    </button>
+    <button class="button" onclick="loadIframe('https://pxl.oops.wtf/launcher')">
+      pxl.oops.wtf/launcher
+    </button>
+    <button class="button" onclick="loadIframe('https://pxl.shit.vc/launcher')">
+      pxl.shit.vc/launcher
+    </button>
   </div>
-  <iframe id="pixelIframe" src=""></iframe>
+  <iframe id="pixelIframe"></iframe>
 
   <script>
-    function loadIframe() {
+    function loadIframe(url) {
       const iframe = document.getElementById('pixelIframe');
-      iframe.src = 'https://devjakob.webs.vc/launcher/';
+      iframe.src = url;
       iframe.style.display = 'block';
     }
   </script>
