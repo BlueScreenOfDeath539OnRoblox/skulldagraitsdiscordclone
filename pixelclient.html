@@ -1,66 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Pixel Client</title>
+  <meta charset="UTF-8"/>
+  <title>Pixel Client Launcher</title>
   <style>
     html, body {
+      height: 100%;
       margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Arial Black', sans-serif;
-      background: url('background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('background.jpg') center/cover no-repeat fixed;
       display: flex;
       flex-direction: column;
-    }
-
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.7);
-      height: 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    h1 {
       color: #fff;
-      text-align: center;
-      font-size: 48px;
-      margin: 20px 0;
-      flex-shrink: 0;
-      text-shadow: 2px 2px 4px #000;
     }
-
-    .buttons {
+    .overlay {
+      flex: 1;
+      backdrop-filter: blur(4px);
+      background-color: rgba(20, 20, 20, 0.85);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 15px;
-      margin-bottom: 15px;
-      flex-shrink: 0;
+      justify-content: center;
     }
-
-    .button {
-      width: 300px;
-      padding: 14px 24px;
-      font-size: 20px;
+    h1 {
+      font-size: 42px;
+      margin-bottom: 40px;
+      text-shadow: 2px 2px 5px #000;
+    }
+    .play-button {
+      background-color: #26da41;
+      color: white;
+      font-size: 24px;
       font-weight: bold;
-      color: #111;
-      background-color: #d6d6d6;
+      padding: 16px 40px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 2px 2px 5px #000;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      transition: transform 0.2s, background-color 0.3s;
     }
-
-    .button:hover {
-      background-color: #f1f1f1;
-      transform: scale(1.03);
+    .play-button:hover {
+      background-color: #2efd60;
+      transform: scale(1.05);
     }
-
+    .popup {
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 600px;
+      background: #1e1e1e;
+      border: 2px solid #2efd60;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0,255,100,0.5);
+      display: none;
+      flex-direction: column;
+      z-index: 999;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+    .popup h2 {
+      margin-top: 0;
+      color: #2efd60;
+    }
+    .popup button.option {
+      margin: 10px 0;
+      padding: 12px;
+      background: #333;
+      color: white;
+      border: 1px solid #2efd60;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+      text-align: left;
+    }
+    .popup button.option:hover {
+      background: #444;
+    }
     iframe {
       flex-grow: 1;
       width: 100%;
@@ -71,20 +89,30 @@
 </head>
 <body>
   <div class="overlay">
-    <h1>Pixel Client</h1>
-    <div class="buttons">
-      <button class="button" onclick="loadIframe('https://devjakob.webs.vc/launcher/')">devjakob.webs.vc</button>
-      <button class="button" onclick="loadIframe('https://pxl.oops.wtf/launcher')">pxl.oops.wtf/launcher</button>
-      <button class="button" onclick="loadIframe('https://pxl.shit.vc/launcher')">pxl.shit.vc/launcher</button>
-    </div>
-    <iframe id="pixelIframe"></iframe>
+    <h1>Pixel Client Launcher</h1>
+    <button class="play-button" onclick="openPopup()">Play</button>
   </div>
 
+  <div class="popup" id="clientPopup">
+    <h2>Select a Client</h2>
+    <button class="option" onclick="launchClient('https://devjakob.webs.vc/launcher/')">devjakob.webs.vc/launcher</button>
+    <button class="option" onclick="launchClient('https://pxl.oops.wtf/launcher')">pxl.oops.wtf/launcher</button>
+    <button class="option" onclick="launchClient('https://pxl.shit.vc/launcher')">pxl.shit.vc/launcher</button>
+  </div>
+
+  <iframe id="clientIframe"></iframe>
+
   <script>
-    function loadIframe(url) {
-      const iframe = document.getElementById('pixelIframe');
+    function openPopup() {
+      document.getElementById('clientPopup').style.display = 'flex';
+    }
+
+    function launchClient(url) {
+      document.getElementById('clientPopup').style.display = 'none';
+      const iframe = document.getElementById('clientIframe');
       iframe.src = url;
       iframe.style.display = 'block';
+      document.querySelector('.overlay').style.display = 'none';
     }
   </script>
 </body>
