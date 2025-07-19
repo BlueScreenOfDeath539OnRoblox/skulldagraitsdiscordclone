@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fast Private Browser</title>
+  <style>
+    body { margin:0; background:#111; color:white; font-family:sans-serif; }
+    #nav { background:#222; padding:10px; display:flex; }
+    #url { flex:1; padding:5px; font-size:16px; }
+    #go { padding:5px 10px; font-size:16px; margin-left:5px; }
+    #frame { width:100%; height:calc(100vh - 50px); border:none; }
+  </style>
+</head>
+<body>
+  <div id="nav">
+    <input id="url" type="text" placeholder="Enter URL" />
+    <button id="go">Go</button>
+  </div>
+  <iframe id="frame"></iframe>
+  <script>
+    const url = document.getElementById('url')
+    const go = document.getElementById('go')
+    const frame = document.getElementById('frame')
+    go.onclick = () => {
+      let u = url.value
+      if (!u.startsWith('http')) u = 'https://' + u
+      frame.src = u
+    }
+  </script>
+</body>
+</html>
