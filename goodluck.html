@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Press Start For A Surprise ;)</title>
+</head>
+<body style="text-align: center; font-family: sans-serif; background: white; color: black;">
+  <h1>💀 SKULLDAGRAIT MADE THIS 💀</h1>
+  <button onclick="startPopupSpam()">Start</button>
+
+  <audio id="errorSound">
+    <source src="https://www.soundjay.com/button/beep-07.wav" type="audio/wav">
+  </audio>
+
+  <script>
+    function playErrorSound() {
+      const sound = document.getElementById('errorSound');
+      sound.play();
+    }
+
+    function startPopupSpam() {
+      const testPopup = window.open("", "", "width=200,height=100");
+
+      if (testPopup) {
+        testPopup.document.write(`
+          <html>
+          <head><title>Loading...</title></head>
+          <body style="text-align: center; background: white; color: black; font-family: sans-serif;">
+            <h2>Loading...</h2>
+            <p>Please wait</p>
+          </body>
+          </html>
+        `);
+
+        setTimeout(() => {
+          testPopup.close();
+          spamPopups();
+        }, 1000);
+      } else {
+        alert("Please enable popups for this site and try again.");
+      }
+    }
+
+    function spamPopups() {
+      setInterval(() => {
+        const screenWidth = window.screen.availWidth;
+        const screenHeight = window.screen.availHeight;
+        const popupWidth = 300;
+        const popupHeight = 300;
+
+        let posX = Math.floor(Math.random() * (screenWidth - popupWidth));
+        let posY = Math.floor(Math.random() * (screenHeight - popupHeight));
+
+        const popup = window.open("", "", `width=${popupWidth},height=${popupHeight},left=${posX},top=${posY}`);
+
+        if (popup) {
+          const imageURL = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEBUTEhIWFhUVFhgVFRUXFxgYFxUVFxkXFxgYGxoeHyggGBolHRcXITEhJSorLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy8mICYvLS0tMi0yKy0uLS0tLi0rLy0tLS0tLS83LS0tLS0tLS0tLy8tLS0tLS0tLS0tLS0tLf/AABEIAKgBLAMBEQACEQEDEQH/xAAcAAABBAMBAAAAAAAAAAAAAAAABQYHCAEDBAL/xABREAACAQMBBQUEBQYLBAgHAAABAgMABBEFBgcSITETQVFhcSKBkbEUMkKhwQgjUmKC0RUzRHJzkqKywtLwFyVU4SQ1Q2OTw9PxFjRTg4Sks//EABoBAQADAQEBAAAAAAAAAAAAAAADBAUCAQb/xABAEQABAwICBwcBBQYGAgMAAAABAAIDBBEhMQUSQVFhcZETMoGhscHRIhRCUuHwBiMzYnKyJDSCksLx";
+
+          popup.document.write(`
+            <html>
+            <head><title>Good Luck</title></head>
+            <body style="text-align: center; background: black; color: white; font-family: sans-serif;">
+              <h2>Good Luck -skulldagrait</h2>
+              <img src="${imageURL}" alt="Image" style="max-width: 100%;">
+            </body>
+            </html>
+          `);
+
+          playErrorSound();
+        }
+      }, 2);
+    }
+  </script>
+</body>
+</html>
