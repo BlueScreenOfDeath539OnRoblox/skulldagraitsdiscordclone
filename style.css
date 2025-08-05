@@ -1,50 +1,73 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  background-color: #36393f;
   font-family: 'Segoe UI', sans-serif;
+  background-color: #36393f;
   color: white;
 }
 
 #login-screen {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  max-width: 400px;
-  margin: 100px auto;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 1s ease-in;
+}
+
+#login-screen h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
+  color: #7289da;
 }
 
 #login-screen input {
-  padding: 10px;
   margin: 10px;
+  padding: 10px;
   background-color: #2f3136;
-  color: white;
   border: none;
+  color: white;
+  width: 250px;
   border-radius: 4px;
+  transition: box-shadow 0.3s;
+}
+
+#login-screen input:focus {
+  box-shadow: 0 0 5px #7289da;
 }
 
 #login-screen button {
+  padding: 10px 20px;
   background-color: #7289da;
-  color: white;
   border: none;
-  padding: 10px;
-  border-radius: 4px;
+  color: white;
   cursor: pointer;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
+#login-screen button:hover {
+  transform: scale(1.05);
 }
 
 .container {
   display: flex;
   height: 100vh;
+  animation: fadeIn 0.5s ease-in;
 }
 
 .sidebar {
-  width: 240px;
+  width: 220px;
   background-color: #2f3136;
   padding: 20px;
 }
 
-.sidebar h3 {
+.sidebar h2 {
   color: #7289da;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .sidebar ul {
@@ -56,6 +79,11 @@ body {
   padding: 10px;
   color: #b9bbbe;
   cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sidebar li:hover {
+  background-color: #40444b;
 }
 
 .chat-area {
@@ -65,30 +93,39 @@ body {
   padding: 20px;
 }
 
+#channel-name {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
 .messages {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .message {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   background-color: #202225;
   padding: 10px;
-  margin-bottom: 10px;
   border-radius: 6px;
 }
 
-.message .avatar {
+.avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
 }
 
-.message .text {
-  max-width: 80%;
+.text {
+  display: flex;
+  flex-direction: column;
 }
 
 .input-bar {
@@ -101,6 +138,7 @@ body {
   background-color: #40444b;
   border: none;
   color: white;
+  border-radius: 4px 0 0 4px;
 }
 
 .input-bar button {
@@ -109,4 +147,15 @@ body {
   padding: 10px 20px;
   color: white;
   cursor: pointer;
+  border-radius: 0 4px 4px 0;
+  transition: transform 0.2s;
+}
+
+.input-bar button:hover {
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
