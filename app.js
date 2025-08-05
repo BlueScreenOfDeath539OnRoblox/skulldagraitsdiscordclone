@@ -1,42 +1,50 @@
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "your-app.firebaseapp.com",
-  databaseURL: "https://your-app.firebaseio.com",
-  projectId: "your-app",
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
 let username = "";
+let messages = [];
 
 function joinChat() {
   username = document.getElementById('username').value || "Anon";
   document.getElementById('login-screen').style.display = "none";
   document.getElementById('chat-screen').style.display = "block";
+
+  loadMessages();
 }
 
 function sendMessage() {
-  const msg = document.getElementById('message-input').value;
-  db.ref("messages").push({
+  const text = document.getElementById('message-input').value;
+  if (!text) return;
+
+  const message = {
     sender: username,
-    text: msg,
-    timestamp: Date.now()
-  });
+    text: text,
+    timestamp: new Date().toLocaleTimeString()
+  };
+  
+  messages.push(message);
+  localStorage.setItem('chat-messages', JSON.stringify(messages));
   document.getElementById('message-input').value = "";
+
+  displayMessage(message);
+  showNotification(`${message.sender}: ${message.text}`);
 }
 
-db.ref("messages").on("child_added", snapshot => {
-  const msg = snapshot.val();
-  const msgDiv = document.createElement('div');
-  msgDiv.textContent = `${msg.sender}: ${msg.text}`;
-  document.getElementById('messages').appendChild(msgDiv);
+function loadMessages() {
+  const stored = JSON.parse(localStorage.getItem('chat-messages')) || [];
+  messages = stored;
+  stored.forEach(displayMessage);
+}
 
-  // 🔔 Optional notification
+function displayMessage(msg) {
+  const div = document.createElement('div');
+  div.className = "message";
+  div.textContent = `[${msg.timestamp}] ${msg.sender}: ${msg.text}`;
+  document.getElementById('messages').appendChild(div);
+}
+
+function showNotification(text) {
   if (Notification.permission === "granted") {
-    new Notification(`${msg.sender} says: ${msg.text}`);
+    new Notification(text);
   }
-});
+}
 
 if (Notification.permission !== "granted") {
   Notification.requestPermission();
