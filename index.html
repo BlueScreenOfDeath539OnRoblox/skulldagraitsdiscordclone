@@ -1,22 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>MiniCord Beta</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MiniCord</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="login-screen">
-    <input type="text" id="username" placeholder="Enter your name" />
-    <button onclick="joinChat()">Join Chat</button>
+  <div class="container">
+    <div class="sidebar">
+      <h3>MiniCord</h3>
+      <ul>
+        <li># general</li>
+        <li># memes</li>
+        <li># dev-chat</li>
+      </ul>
+    </div>
+    <div class="chat-area">
+      <div id="messages" class="messages"></div>
+      <div class="input-bar">
+        <input type="text" id="message-input" placeholder="Message #general" />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
   </div>
-
-  <div id="chat-screen" style="display:none;">
-    <h2>🧪 MiniCord Chat</h2>
-    <div id="messages"></div>
-    <input id="message-input" placeholder="Type your message..." />
-    <button onclick="sendMessage()">Send</button>
-  </div>
-
   <script src="app.js"></script>
 </body>
 </html>
