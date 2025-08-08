@@ -18,20 +18,70 @@ window.onload = function () {
 
   function sendMessage() {
     const msg = messageInput.value.trim();
-    if (msg || fileInput.files.length > 0) {
-      let confirmMsg = msg ? `Message: ${msg}` : "";
-      if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        confirmMsg += `\nFile: ${file.name}`;
-        if (!confirm(`Are you sure you want to send ${file.name}?`)) return;
-      }
+    const file = fileInput.files[0];
 
-      const messageElement = document.createElement("div");
-      messageElement.textContent = confirmMsg;
-      chatBox.appendChild(messageElement);
+    if (!msg && !file) return;
 
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const fileURL = reader.result;
+        const fileName = file.name;
+        if (!confirm(`Are you sure you want to send ${fileName}?`)) return;
+
+        displayMessage({
+          sender: username,
+          avatar: avatar,
+          text: msg,
+          file: { name: fileName, url: fileURL }
+        });
+
+        messageInput.value = "";
+        fileInput.value = "";
+      };
+      reader.readAsDataURL(file);
+    } else {
+      displayMessage({
+        sender: username,
+        avatar: avatar,
+        text: msg
+      });
       messageInput.value = "";
-      fileInput.value = "";
     }
+  }
+
+  function displayMessage({ sender, avatar, text, file }) {
+    const msgDiv = document.createElement("div");
+    msgDiv.className = "message";
+
+    const avatarImg = document.createElement("img");
+    avatarImg.className = "avatar";
+    avatarImg.src = avatar;
+
+    const contentDiv = document.createElement("div");
+    contentDiv.className = "content";
+
+    const nameTag = document.createElement("strong");
+    nameTag.textContent = sender;
+    contentDiv.appendChild(nameTag);
+
+    if (text) {
+      const textNode = document.createElement("span");
+      textNode.textContent = text;
+      contentDiv.appendChild(textNode);
+    }
+
+    if (file) {
+      const fileLink = document.createElement("a");
+      fileLink.href = file.url;
+      fileLink.download = file.name;
+      fileLink.textContent = `📎 ${file.name}`;
+      contentDiv.appendChild(fileLink);
+    }
+
+    msgDiv.appendChild(avatarImg);
+    msgDiv.appendChild(contentDiv);
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
   }
 };
