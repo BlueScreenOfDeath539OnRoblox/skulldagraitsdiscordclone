@@ -2,25 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MiniCord</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="header">
-    <img id="profilePic" class="avatar" src="" alt="Your Avatar" />
-    <span id="usernameDisplay"></span>
+  <!-- Sign-Up Screen -->
+  <div id="signupScreen">
+    <h2>Sign Up</h2>
+    <input type="text" id="usernameInput" placeholder="Enter your name" />
+    <input type="text" id="avatarInput" placeholder="Paste avatar image URL" />
+    <button onclick="completeSignup()">Start Chat</button>
   </div>
 
-  <div id="chatBox" class="chat-box"></div>
+  <!-- Chat Screen -->
+  <div id="chatScreen" style="display: none;">
+    <header>
+      <img id="profilePic" class="avatar" src="" alt="Avatar" />
+      <span id="usernameDisplay"></span>
+    </header>
 
-  <div class="input-bar">
-    <label class="file-upload">
-      ➕
-      <input type="file" id="fileInput" hidden />
-    </label>
-    <input type="text" id="messageInput" placeholder="Type a message..." />
-    <button id="sendBtn">Send</button>
+    <div id="chatBox" class="chat-box"></div>
+
+    <div class="input-area">
+      <input type="text" id="messageInput" placeholder="Type a message..." />
+      <input type="file" id="fileInput" />
+      <button id="sendBtn">Send</button>
+    </div>
   </div>
 
   <script src="app.js"></script>
