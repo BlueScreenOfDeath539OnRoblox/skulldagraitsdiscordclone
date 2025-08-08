@@ -7,29 +7,20 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="authScreen" class="auth-screen">
-    <h2>Sign Up</h2>
-    <input type="text" id="usernameInput" placeholder="Enter your name" />
-    <input type="text" id="avatarInput" placeholder="Paste avatar image URL" />
-    <button id="signupBtn">Join Chat</button>
+  <div class="header">
+    <img id="profilePic" class="avatar" src="" alt="Your Avatar" />
+    <span id="usernameDisplay"></span>
   </div>
 
-  <div id="chatScreen" class="chat-screen hidden">
-    <div class="header">
-      <img id="profilePic" class="avatar" src="" alt="Your Avatar" />
-      <span id="usernameDisplay"></span>
-    </div>
+  <div id="chatBox" class="chat-box"></div>
 
-    <div id="chatBox" class="chat-box"></div>
-
-    <div class="input-bar">
-      <label class="file-upload">
-        ➕
-        <input type="file" id="fileInput" hidden />
-      </label>
-      <input type="text" id="messageInput" placeholder="Type a message..." />
-      <button id="sendBtn">Send</button>
-    </div>
+  <div class="input-bar">
+    <label class="file-upload">
+      ➕
+      <input type="file" id="fileInput" hidden />
+    </label>
+    <input type="text" id="messageInput" placeholder="Type a message..." />
+    <button id="sendBtn">Send</button>
   </div>
 
   <script src="app.js"></script>
