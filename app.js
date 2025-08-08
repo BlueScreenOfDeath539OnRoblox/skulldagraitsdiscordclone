@@ -1,6 +1,21 @@
-window.onload = function () {
-  const username = localStorage.getItem("username") || "You";
-  const avatar = localStorage.getItem("avatar") || "https://i.imgur.com/your-default-avatar.png";
+function completeSignup() {
+  const name = document.getElementById("usernameInput").value.trim();
+  const avatar = document.getElementById("avatarInput").value.trim();
+
+  if (!name || !avatar) return alert("Enter both name and avatar URL");
+
+  localStorage.setItem("username", name);
+  localStorage.setItem("avatar", avatar);
+
+  document.getElementById("signupScreen").style.display = "none";
+  document.getElementById("chatScreen").style.display = "block";
+
+  startChat();
+}
+
+function startChat() {
+  const username = localStorage.getItem("username");
+  const avatar = localStorage.getItem("avatar");
 
   document.getElementById("usernameDisplay").textContent = username;
   document.getElementById("profilePic").src = avatar;
@@ -10,8 +25,8 @@ window.onload = function () {
   const messageInput = document.getElementById("messageInput");
   const chatBox = document.getElementById("chatBox");
 
-  sendBtn.addEventListener("click", sendMessage);
-  messageInput.addEventListener("keypress", function (e) {
+  sendBtn.onclick = sendMessage;
+  messageInput.addEventListener("keypress", e => {
     if (e.key === "Enter") sendMessage();
   });
 
@@ -102,4 +117,11 @@ window.onload = function () {
     const messages = JSON.parse(localStorage.getItem("messages") || "[]");
     messages.forEach(displayMessage);
   }
-};
+}
+
+// Auto-start if already signed up
+if (localStorage.getItem("username") && localStorage.getItem("avatar")) {
+  document.getElementById("signupScreen").style.display = "none";
+  document.getElementById("chatScreen").style.display = "block";
+  startChat();
+}
