@@ -1,53 +1,25 @@
 window.onload = function () {
-  const authScreen = document.getElementById("authScreen");
-  const chatScreen = document.getElementById("chatScreen");
-  const signupBtn = document.getElementById("signupBtn");
-  const usernameInput = document.getElementById("usernameInput");
-  const avatarInput = document.getElementById("avatarInput");
+  const username = localStorage.getItem("username") || "You";
+  const avatar = localStorage.getItem("avatar") || "https://i.imgur.com/your-default-avatar.png";
 
-  const usernameDisplay = document.getElementById("usernameDisplay");
-  const profilePic = document.getElementById("profilePic");
-  const chatBox = document.getElementById("chatBox");
-  const messageInput = document.getElementById("messageInput");
-  const sendBtn = document.getElementById("sendBtn");
+  document.getElementById("usernameDisplay").textContent = username;
+  document.getElementById("profilePic").src = avatar;
+
   const fileInput = document.getElementById("fileInput");
+  const sendBtn = document.getElementById("sendBtn");
+  const messageInput = document.getElementById("messageInput");
+  const chatBox = document.getElementById("chatBox");
 
-  // Load saved user
-  const savedUsername = localStorage.getItem("username");
-  const savedAvatar = localStorage.getItem("avatar");
-
-  if (savedUsername && savedAvatar) {
-    showChat(savedUsername, savedAvatar);
-  }
-
-  signupBtn.onclick = () => {
-    const name = usernameInput.value.trim();
-    const avatar = avatarInput.value.trim();
-    if (!name || !avatar) return alert("Please enter both name and avatar URL");
-
-    localStorage.setItem("username", name);
-    localStorage.setItem("avatar", avatar);
-    showChat(name, avatar);
-  };
-
-  function showChat(name, avatar) {
-    authScreen.classList.add("hidden");
-    chatScreen.classList.remove("hidden");
-    usernameDisplay.textContent = name;
-    profilePic.src = avatar;
-    loadMessages();
-  }
-
-  sendBtn.onclick = sendMessage;
-  messageInput.addEventListener("keypress", e => {
+  sendBtn.addEventListener("click", sendMessage);
+  messageInput.addEventListener("keypress", function (e) {
     if (e.key === "Enter") sendMessage();
   });
+
+  loadMessages();
 
   function sendMessage() {
     const msg = messageInput.value.trim();
     const file = fileInput.files[0];
-    const username = localStorage.getItem("username");
-    const avatar = localStorage.getItem("avatar");
 
     if (!msg && !file) return;
 
@@ -56,7 +28,6 @@ window.onload = function () {
       reader.onload = function () {
         const fileURL = reader.result;
         const fileName = file.name;
-        if (!confirm(`Send ${fileName}?`)) return;
 
         const message = {
           sender: username,
@@ -64,8 +35,10 @@ window.onload = function () {
           text: msg,
           file: { name: fileName, url: fileURL }
         };
+
         saveMessage(message);
         displayMessage(message);
+
         messageInput.value = "";
         fileInput.value = "";
       };
@@ -76,8 +49,10 @@ window.onload = function () {
         avatar: avatar,
         text: msg
       };
+
       saveMessage(message);
       displayMessage(message);
+
       messageInput.value = "";
     }
   }
