@@ -1,24 +1,53 @@
 window.onload = function () {
-  const username = localStorage.getItem("username");
-  const avatar = localStorage.getItem("avatar");
-  if (username && avatar) {
-    document.getElementById("usernameDisplay").textContent = username;
-    document.getElementById("profilePic").src = avatar;
+  const authScreen = document.getElementById("authScreen");
+  const chatScreen = document.getElementById("chatScreen");
+  const signupBtn = document.getElementById("signupBtn");
+  const usernameInput = document.getElementById("usernameInput");
+  const avatarInput = document.getElementById("avatarInput");
+
+  const usernameDisplay = document.getElementById("usernameDisplay");
+  const profilePic = document.getElementById("profilePic");
+  const chatBox = document.getElementById("chatBox");
+  const messageInput = document.getElementById("messageInput");
+  const sendBtn = document.getElementById("sendBtn");
+  const fileInput = document.getElementById("fileInput");
+
+  // Load saved user
+  const savedUsername = localStorage.getItem("username");
+  const savedAvatar = localStorage.getItem("avatar");
+
+  if (savedUsername && savedAvatar) {
+    showChat(savedUsername, savedAvatar);
   }
 
-  const fileInput = document.getElementById("fileInput");
-  const sendBtn = document.getElementById("sendBtn");
-  const messageInput = document.getElementById("messageInput");
-  const chatBox = document.getElementById("chatBox");
+  signupBtn.onclick = () => {
+    const name = usernameInput.value.trim();
+    const avatar = avatarInput.value.trim();
+    if (!name || !avatar) return alert("Please enter both name and avatar URL");
 
-  sendBtn.addEventListener("click", sendMessage);
-  messageInput.addEventListener("keypress", function (e) {
+    localStorage.setItem("username", name);
+    localStorage.setItem("avatar", avatar);
+    showChat(name, avatar);
+  };
+
+  function showChat(name, avatar) {
+    authScreen.classList.add("hidden");
+    chatScreen.classList.remove("hidden");
+    usernameDisplay.textContent = name;
+    profilePic.src = avatar;
+    loadMessages();
+  }
+
+  sendBtn.onclick = sendMessage;
+  messageInput.addEventListener("keypress", e => {
     if (e.key === "Enter") sendMessage();
   });
 
   function sendMessage() {
     const msg = messageInput.value.trim();
     const file = fileInput.files[0];
+    const username = localStorage.getItem("username");
+    const avatar = localStorage.getItem("avatar");
 
     if (!msg && !file) return;
 
@@ -27,25 +56,28 @@ window.onload = function () {
       reader.onload = function () {
         const fileURL = reader.result;
         const fileName = file.name;
-        if (!confirm(`Are you sure you want to send ${fileName}?`)) return;
+        if (!confirm(`Send ${fileName}?`)) return;
 
-        displayMessage({
+        const message = {
           sender: username,
           avatar: avatar,
           text: msg,
           file: { name: fileName, url: fileURL }
-        });
-
+        };
+        saveMessage(message);
+        displayMessage(message);
         messageInput.value = "";
         fileInput.value = "";
       };
       reader.readAsDataURL(file);
     } else {
-      displayMessage({
+      const message = {
         sender: username,
         avatar: avatar,
         text: msg
-      });
+      };
+      saveMessage(message);
+      displayMessage(message);
       messageInput.value = "";
     }
   }
@@ -83,5 +115,16 @@ window.onload = function () {
     msgDiv.appendChild(contentDiv);
     chatBox.appendChild(msgDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function saveMessage(message) {
+    const messages = JSON.parse(localStorage.getItem("messages") || "[]");
+    messages.push(message);
+    localStorage.setItem("messages", JSON.stringify(messages));
+  }
+
+  function loadMessages() {
+    const messages = JSON.parse(localStorage.getItem("messages") || "[]");
+    messages.forEach(displayMessage);
   }
 };
